@@ -1,13 +1,22 @@
-#include <HCSR04.h>
+#include <Servo.h>
 
-UltraSonicDistanceSensor distanceSensor(13, 12);  // Initialize sensor that uses digital pins 13 and 12.
-
-void setup () {
-    Serial.begin(9600);  // We initialize serial connection so that we could print values from sensor.
+Servo myservo; // Create a Servo object named myservo
+void setup() {
+  myservo.attach(7); // Attach the servo to digital pin 7
+  Serial.begin(9600); // Initialize serial communication at 9600 baud rate
 }
 
-void loop () {
-    // Every 500 miliseconds, do a measurement using the sensor and print the distance in centimeters.
-    Serial.println(distanceSensor.measureDistanceCm());
-    delay(500);
+void loop() {
+  for (int ang = 0; ang < 180; ang++) { // Loop from 0 to 359 degrees
+    myservo.write(ang); // Set the servo position to the current angle
+    Serial.println(ang); // Print the current angle to the Serial Monitor
+    delay(50); // Wait for 50 milliseconds
+  delay(15);
+  }
+
+  for (int ang = 180; ang > 0; ang--) { // Loop from 180 to 1 degree
+    myservo.write(ang); // Set the servo position to the current angle
+    Serial.println(ang); // Print the current angle to the Serial Monitor
+    delay(50); // Wait for 50 milliseconds
+  }
 }
